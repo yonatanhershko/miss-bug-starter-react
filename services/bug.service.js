@@ -13,12 +13,15 @@ export const bugService = {
     getById,
     save,
     remove,
+    getDefaultFilter,
+    getEmptyBug,
+
 }
 
 
-function query() {
+function query(filterBy = {}) {
     // return storageService.query(STORAGE_KEY)
-    return axios.get(BASE_URL)
+    return axios.get(BASE_URL, { params: filterBy })
         .then(res => res.data)
         .catch(err => console.log(err))
 
@@ -28,20 +31,24 @@ function query() {
 function getById(bugId) {
     return axios.get(BASE_URL + bugId)
         .then(res => res.data)
-        // .then(bug => _setNextPrevbugId(bug))
-}
 
-// function getById(bugId) {
-//     return storageService.get(STORAGE_KEY, bugId)
-// }
+}
 
 
 function remove(bugId) {
     return axios.get(BASE_URL + bugId + '/remove')
-    .then(res => res.data)
+        .then(res => res.data)
 }
 
 
+function getEmptyBug(title = '', severity = '') {
+    return { title, severity }
+}
+
+
+function getDefaultFilter() {
+    return { title: '', severity: '' }
+}
 
 
 function save(bug) {
