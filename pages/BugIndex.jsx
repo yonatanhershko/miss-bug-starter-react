@@ -108,7 +108,7 @@ export function BugIndex() {
             return { ...prevFilter, pageIdx: prevFilter.pageIdx === undefined ? 0 : undefined }
         })
     }
-    
+
     function onChangePage(diff) {
         if (filterBy.pageIdx === undefined) return
         
@@ -125,7 +125,7 @@ export function BugIndex() {
             <section className='info-actions'>
                 <h3>Bugs App</h3>
                 <button onClick={onAddBug}>Add Bug ⛐</button>
-                <section>
+                <section className='info-options'>
                 <button onClick={togglePagination} >Toggle Pagination</button>
                 <button onClick={() => onChangePage(-1)}>-</button>
                 {filterBy.pageIdx + 1 || 'No Pagination'}

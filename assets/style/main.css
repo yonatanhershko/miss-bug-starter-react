@@ -110,3 +110,24 @@ nav a:hover {
 .container {
     padding-inline: 8rem;
 }
+
+.note-filter-type{
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.filter-search-bars{
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 1em;
+}
+
+.bug-filter{
+    padding: 0.8em;
+    background-color: #e6fdff;
+    border-radius: 8px;
+    margin-top: 1em;
+   
+}

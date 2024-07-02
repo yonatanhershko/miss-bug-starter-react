@@ -57,13 +57,15 @@ export function BugFilter({ filterBy, onSetFilter }) {
     return (
         <section className="bug-filter">
             <h2>Filter Our Bugs</h2>
+
             <form onSubmit={onSubmitFilter}>
-                <label htmlFor="title">Title</label>
-                <input value={title} onChange={handleChange} name="title" type="text" id="title" />
+                <section className="filter-search-bars">
+                    <label htmlFor="title">Title</label>
+                    <input value={title} onChange={handleChange} name="title" type="text" id="title" />
 
-                <label htmlFor="severity">Severity</label>
-                <input value={severity || ''} onChange={handleChange} name="severity" type="number" id="severity" />
-
+                    <label htmlFor="severity">Severity</label>
+                    <input value={severity || ''} onChange={handleChange} name="severity" type="number" id="severity" />
+                </section>
                 <div className="labels-container">
                     <label>Labels</label>
                     <div>
