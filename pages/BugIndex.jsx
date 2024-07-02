@@ -44,19 +44,37 @@ export function BugIndex() {
     }
 
     function onAddBug() {
-        const bug = {
-            title: prompt('Bug title?'),
-            description: prompt('Bug description?'),
-            severity: +prompt('Bug severity?'),
+        const title = prompt('Bug title?')
+        if (!title) return showErrorMsg('Title is required')
+
+        const description = prompt('Bug description?')
+        if (!description) return showErrorMsg('Description is required')
+
+        const severityInput = prompt('Bug severity?')
+        const severity = parseInt(severityInput, 10)
+        if (isNaN(severity) || severity < 1 || severity > 5) {
+            return showErrorMsg('Severity must be a number between 1 and 5')
         }
-        bugService
-            .save(bug)
-            .then((savedBug) => {
+
+        const labels = prompt('Bug labels (comma-separated)?', 'critical,need-CR,dev-branch')
+            .split(',')
+            .map(label => label.trim())
+
+        const bug = {
+            title,
+            description,
+            severity,
+            labels,
+            createdAt: Date.now() 
+        }
+        console.log(bug)////
+        bugService.save(bug)
+            .then(savedBug => {
                 console.log('Added Bug', savedBug)
-                setBugs([...bugs, savedBug])
+                setBugs(prevBugs => [...prevBugs, savedBug])
                 showSuccessMsg('Bug added')
             })
-            .catch((err) => {
+            .catch(err => {
                 console.log('Error from onAddBug ->', err)
                 showErrorMsg('Cannot add bug')
             })

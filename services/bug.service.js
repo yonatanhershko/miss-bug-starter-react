@@ -15,6 +15,7 @@ export const bugService = {
     remove,
     getDefaultFilter,
     getEmptyBug,
+    getEmptySort
 
 }
 
@@ -36,7 +37,7 @@ function getById(bugId) {
 
 
 function remove(bugId) {
-    return axios.get(BASE_URL + bugId + '/remove')
+    return axios.delete(BASE_URL + bugId )
         .then(res => res.data)
 }
 
@@ -47,15 +48,23 @@ function getEmptyBug(title = '', severity = '') {
 
 
 function getDefaultFilter() {
-    return { title: '', severity: '' }
+    return { title: '', severity: '', labels: [] }
 }
 
 
 function save(bug) {
-    const url = BASE_URL + 'save'
-    let queryParams = `?title=${bug.title}&severity=${bug.severity}`
-    if (bug._id) queryParams += `&_id=${bug._id}`
-    return axios.get(url + queryParams).then(res => res.data)
+    if (bug._id) {
+        return axios.put(BASE_URL, bug)
+    } else {
+        return axios.post(BASE_URL, bug).then(res => res.data)
+    }
+}
+
+function getEmptySort() {
+    return {
+        by: 'title',
+        desc: 1
+    }
 }
 
 
@@ -67,25 +76,43 @@ function _createBugs() {
                 title: "Infinite Loop Detected",
                 severity: 4,
                 description: "des",
-                _id: "1NF1N1T3"
+                _id: "1NF1N1T3",
+                labels: [
+                    "critical",
+                    "dev-branch"
+                ]
+
             },
             {
                 title: "Keyboard Not Found",
                 severity: 3,
                 description: "des",
-                _id: "K3YB0RD"
+                _id: "K3YB0RD",
+                labels: [
+                    "critical",
+                    "need-CR",
+                    "dev-branch"
+                ]
             },
             {
                 title: "404 Coffee Not Found",
                 severity: 2,
                 description: "des",
-                _id: "C0FF33"
+                _id: "C0FF33",
+                labels: [
+                    "critical",
+                    "need-CR",
+                    "dev-branch"
+                ]
             },
             {
                 title: "Unexpected Response",
                 severity: 1,
                 description: "des",
-                _id: "G0053"
+                _id: "G0053",
+                labels: [
+                    "dev-branch"
+                ]
             }
         ]
         utilService.saveToStorage(STORAGE_KEY, bugs)
