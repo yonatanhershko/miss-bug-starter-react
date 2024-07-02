@@ -103,7 +103,21 @@ export function BugIndex() {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
 
-
+    function togglePagination() {
+        setFilterBy(prevFilter => {
+            return { ...prevFilter, pageIdx: prevFilter.pageIdx === undefined ? 0 : undefined }
+        })
+    }
+    
+    function onChangePage(diff) {
+        if (filterBy.pageIdx === undefined) return
+        
+        setFilterBy(prevFilter => {
+            let nextPageIdx = prevFilter.pageIdx + diff
+            if (nextPageIdx < 0) nextPageIdx = 0
+            return { ...prevFilter, pageIdx: nextPageIdx }
+        })
+    }
 
 
     return (
@@ -111,6 +125,12 @@ export function BugIndex() {
             <section className='info-actions'>
                 <h3>Bugs App</h3>
                 <button onClick={onAddBug}>Add Bug ⛐</button>
+                <section>
+                <button onClick={togglePagination} >Toggle Pagination</button>
+                <button onClick={() => onChangePage(-1)}>-</button>
+                {filterBy.pageIdx + 1 || 'No Pagination'}
+                <button onClick={() => onChangePage(1)}>+</button>
+            </section>
             </section>
             <main>
                 <BugFilter filterBy={filterBy} onSetFilter={onSetFilter} />
