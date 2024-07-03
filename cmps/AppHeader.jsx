@@ -2,6 +2,7 @@ const { NavLink, Link } = ReactRouterDOM
 const { useEffect, useState } = React
 const { useNavigate } = ReactRouter
 
+import { UserDetails } from '../pages/UserDetails.jsx'
 import { userService } from '../services/user.service.js'
 import { LoginSignup } from './LoginSignup.jsx'
 import { UserMsg } from './UserMsg.jsx'
@@ -24,8 +25,10 @@ export function AppHeader() {
     return (
         <header className='container'>
             <nav>
+
                 <NavLink to="/">Home</NavLink> |<NavLink to="/bug">Bugs</NavLink> |
-                <NavLink to="/about">About</NavLink>
+                <NavLink to="/about">About</NavLink>|
+                {user && <NavLink to={`/user/${user._id}`}>Profile </NavLink>}
             </nav>
             <h1>Bugs are Forever</h1>
             {user ? (
@@ -36,7 +39,9 @@ export function AppHeader() {
             ) : (
                 <section>
                     <LoginSignup onSetUser={onSetUser} />
+
                 </section>
+
             )}
 
             <UserMsg />
