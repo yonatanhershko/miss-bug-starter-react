@@ -1,4 +1,5 @@
 
+const { Link } = ReactRouterDOM
 
 export function BugPreview({ bug }) {
     return (

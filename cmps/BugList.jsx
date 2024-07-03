@@ -7,12 +7,14 @@ export function BugList({ bugs, onRemoveBug, onEditBug }) {
 
     const user = userService.getLoggedinUser()
 
+
     function isOwner(bug) {
         if (!user) return false
         if (!bug.creator) return true
         return user.isAdmin || bug.creator._id === user._id
     }
 
+    console.log(bugs)
     if (!bugs) return <div>Loading...</div>
     return (
         <ul className="bug-list">
@@ -22,10 +24,11 @@ export function BugList({ bugs, onRemoveBug, onEditBug }) {
                     <Link to={`/bug/${bug._id}`}>Details</Link>
 
                     {isOwner(bug) &&
-                        <div>
-                            <button onClick={() => onRemoveBug(bug._id)}>x</button>
-                            <button onClick={() => onEditBug(bug)}>Edit</button>
-                        </div>}
+                    <div>
+                        <button onClick={() => onRemoveBug(bug._id)}>x</button>
+                        <button onClick={() => onEditBug(bug)}>Edit</button>
+                    </div>
+                     } 
                 </li>
             ))
             }
